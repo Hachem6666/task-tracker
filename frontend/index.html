@@ -393,13 +393,30 @@ async function submitTaskForm(event) {
   event.preventDefault();
   clearModalErrors();
 
-  const titleValue = fieldTitle.value.trim();
+  const titleValue = validateTaskTitle();
   if (!titleValue) {
-    titleError.textContent = "Title is required";
-    fieldTitle.focus();
     return;
   }
 
+  const payload = buildTaskPayload(titleValue);
+  const { url, method } = buildTaskRequestConfig();
+
+  await submitTaskPayload(url, method, payload);
+}
+
+function validateTaskTitle() {
+  const titleValue = fieldTitle.value.trim();
+
+  if (!titleValue) {
+    titleError.textContent = "Title is required";
+    fieldTitle.focus();
+    return null;
+  }
+
+  return titleValue;
+}
+
+function buildTaskPayload(titleValue) {
   const payload = {
     title: titleValue,
     description: String(fieldDescription.value ?? ""),
@@ -408,12 +425,26 @@ async function submitTaskForm(event) {
     assignee: fieldAssignee.value.trim() || null,
   };
 
-  const isEdit = Boolean(fieldTaskId.value);
-  const url = `${API_BASE_URL}/tasks${isEdit ? `/${encodeURIComponent(fieldTaskId.value)}` : ""}`;
-  const method = isEdit ? "PATCH" : "POST";
-  if (isEdit && activeEditTask && payload.status === activeEditTask.status) {
-  delete payload.status;
+  if (isEditTask() && activeEditTask && payload.status === activeEditTask.status) {
+    delete payload.status;
+  }
+
+  return payload;
 }
+
+function isEditTask() {
+  return Boolean(fieldTaskId.value);
+}
+
+function buildTaskRequestConfig() {
+  const isEdit = isEditTask();
+  return {
+    url: `${API_BASE_URL}/tasks${isEdit ? `/${encodeURIComponent(fieldTaskId.value)}` : ""}`,
+    method: isEdit ? "PATCH" : "POST",
+  };
+}
+
+async function submitTaskPayload(url, method, payload) {
   try {
     const response = await fetch(url, {
       method,
@@ -421,22 +452,26 @@ async function submitTaskForm(event) {
       body: JSON.stringify(payload),
     });
 
-    if (response.ok) {
-      closeTaskModal();
-      await fetchTasks();
-      return;
-    }
-
-    if (response.status === 422) {
-      const body = await response.json().catch(() => null);
-      formError.textContent = body?.detail || body?.message || "Validation failed";
-      return;
-    }
-
-    throw new Error(`Failed to ${isEdit ? "update" : "create"} task: ${response.status}`);
+    await handleTaskResponse(response, method);
   } catch (error) {
     formError.textContent = error instanceof Error ? error.message : String(error);
   }
+}
+
+async function handleTaskResponse(response, method) {
+  if (response.ok) {
+    closeTaskModal();
+    await fetchTasks();
+    return;
+  }
+
+  if (response.status === 422) {
+    const body = await response.json().catch(() => null);
+    formError.textContent = body?.detail || body?.message || "Validation failed";
+    return;
+  }
+
+  throw new Error(`Failed to ${method === "PATCH" ? "update" : "create"} task: ${response.status}`);
 }
 
 function attachModalHandlers() {
