@@ -164,3 +164,14 @@ def test_delete_missing_returns_404(client):
 
     assert response.status_code == 404
     assert response.json()["detail"] == "Task with id missing-id not found"
+def test_patch_empty_json_object_returns_existing_task_unchanged(client):
+    create_response = client.post("/tasks", json={"title": "Original", "description": "Initial description"})
+    task_id = create_response.json()["id"]
+
+    response = client.patch(f"/tasks/{task_id}", json={})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["id"] == task_id
+    assert body["title"] == "Original"
+    assert body["description"] == "Initial description"

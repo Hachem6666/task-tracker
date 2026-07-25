@@ -77,7 +77,6 @@ def update_task_route(task_id: str, payload: TaskUpdate) -> TaskResponse:
         return updated_task
     raise HTTPException(status_code=404, detail=f"Task with id {task_id} not found")
 
-
 @app.delete("/tasks/{task_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["tasks"])
 def delete_task_route(task_id: str) -> None:
     deleted = storage.delete_task(task_id)
