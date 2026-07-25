@@ -316,7 +316,14 @@
             <label for="task-assignee">Assignee</label>
             <input id="task-assignee" name="assignee" type="text" autocomplete="off" />
           </div>
-
+<div class="modal__field">
+            <label for="task-due-date">Due date</label>
+            <input id="task-due-date" name="dueDate" type="date" />
+          </div>
+          <div class="modal__field">
+            <label for="task-tags">Tags</label>
+            <input id="task-tags" name="tags" type="text" placeholder="e.g. backend, urgent" autocomplete="off" />
+          </div>
           <div class="modal__actions">
             <button type="button" class="btn-edit btn-cancel">Cancel</button>
             <button type="submit" class="btn-edit">Save</button>
@@ -347,6 +354,8 @@ const fieldDescription = taskForm.elements.description;
 const fieldStatus = taskForm.elements.status;
 const fieldPriority = taskForm.elements.priority;
 const fieldAssignee = taskForm.elements.assignee;
+const fieldDueDate = taskForm.elements.dueDate;
+const fieldTags = taskForm.elements.tags;
 const cancelButton = taskForm.querySelector(".btn-cancel");
 
 function clearModalErrors() {
@@ -377,6 +386,8 @@ function openTaskModal(mode, task = null) {
     fieldStatus.value = task.status;
     fieldPriority.value = task.priority;
     fieldAssignee.value = task.assignee;
+    fieldDueDate.value = task.dueDate ? task.dueDate.slice(0, 10) : "";
+    fieldTags.value = task.tags ? task.tags.join(", ") : "";
   }
 
   fieldTitle.focus();
@@ -423,6 +434,11 @@ function buildTaskPayload(titleValue) {
     status: fieldStatus.value,
     priority: fieldPriority.value,
     assignee: fieldAssignee.value.trim() || null,
+    due_date: fieldDueDate.value || null,
+    tags: fieldTags.value
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0),
   };
 
   if (isEditTask() && activeEditTask && payload.status === activeEditTask.status) {
@@ -666,7 +682,7 @@ function attachModalHandlers() {
           card.appendChild(description);
         }
 
-        const meta = document.createElement("div");
+       const meta = document.createElement("div");
         meta.className = "task-card__meta";
 
         const priorityBadge = document.createElement("span");
@@ -678,6 +694,22 @@ function attachModalHandlers() {
         assigneeBadge.className = "badge";
         assigneeBadge.textContent = task.assignee || "Unassigned";
         meta.appendChild(assigneeBadge);
+
+        if (task.dueDate && task.status !== "Done" && new Date(task.dueDate) < new Date()) {
+          const overdueBadge = document.createElement("span");
+          overdueBadge.className = "badge";
+          overdueBadge.style.background = "#fee2e2";
+          overdueBadge.style.color = "#b91c1c";
+          overdueBadge.textContent = "Overdue";
+          meta.appendChild(overdueBadge);
+        }
+
+        task.tags.forEach((tag) => {
+          const tagBadge = document.createElement("span");
+          tagBadge.className = "badge";
+          tagBadge.textContent = tag;
+          meta.appendChild(tagBadge);
+        });
 
         card.appendChild(meta);
 
@@ -722,6 +754,8 @@ function attachModalHandlers() {
           status: String(task.status ?? ""),
           priority: String(task.priority ?? ""),
           assignee: task.assignee ? String(task.assignee) : "",
+          dueDate: task.due_date ?? null,
+          tags: Array.isArray(task.tags) ? task.tags : [],
         }))
       );
 
