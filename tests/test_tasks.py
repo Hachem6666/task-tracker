@@ -255,3 +255,14 @@ def test_list_tasks_filter_by_tag_case_insensitive(client):
     body = response.json()
     assert len(body) == 1
     assert body[0]["title"] == "Tagged task"
+
+def test_patch_null_title_returns_422(client):
+    create_response = client.post("/tasks", json={"title": "Original title"})
+    task_id = create_response.json()["id"]
+
+    response = client.patch(f"/tasks/{task_id}", json={"title": None})
+
+    assert response.status_code == 422
+
+    get_response = client.get(f"/tasks/{task_id}")
+    assert get_response.json()["title"] == "Original title"

@@ -1,8 +1,6 @@
-# Task Tracker API — Module 1 Skeleton
+# Task Tracker
 
-A minimal FastAPI skeleton for the Task Tracker learning project. This skeleton
-only includes a `/health` endpoint to verify the server runs correctly. Task
-CRUD features are added in later steps of the module.
+A FastAPI backend and vanilla JS frontend for tracking tasks on a Kanban-style board, built across Modules 1-3 and extended in the Mid-Course Project with due dates/overdue filtering and tags. Supports full task CRUD, status transitions, drag-and-drop, and a create/edit modal.
 
 ## Requirements
 
