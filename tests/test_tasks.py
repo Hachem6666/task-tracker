@@ -256,6 +256,7 @@ def test_list_tasks_filter_by_tag_case_insensitive(client):
     assert len(body) == 1
     assert body[0]["title"] == "Tagged task"
 
+
 def test_patch_null_title_returns_422(client):
     create_response = client.post("/tasks", json={"title": "Original title"})
     task_id = create_response.json()["id"]
@@ -266,3 +267,17 @@ def test_patch_null_title_returns_422(client):
 
     get_response = client.get(f"/tasks/{task_id}")
     assert get_response.json()["title"] == "Original title"
+
+
+def test_list_tasks_filter_overdue_with_naive_due_date_does_not_crash(client):
+    client.post("/tasks", json={
+        "title": "Naive due date task",
+        "due_date": "2020-01-01T00:00:00",
+    })
+
+    response = client.get("/tasks", params={"overdue": "true"})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body) == 1
+    assert body[0]["title"] == "Naive due date task"

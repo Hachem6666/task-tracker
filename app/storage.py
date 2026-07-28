@@ -6,6 +6,12 @@ from app.models import TaskCreate, TaskUpdate, TaskResponse, TaskStatus
 _tasks: dict[str, TaskResponse] = {}
 
 
+def _as_aware_utc(dt: datetime) -> datetime:
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
 def add_task(payload: TaskCreate) -> TaskResponse:
     task_id = str(uuid4())
     now = datetime.now(timezone.utc)
@@ -41,7 +47,7 @@ def get_all_tasks(
         tasks = [
             t for t in tasks
             if t.due_date is not None
-            and t.due_date < now
+            and _as_aware_utc(t.due_date) < now
             and t.status != TaskStatus.DONE
         ]
     if tag:
