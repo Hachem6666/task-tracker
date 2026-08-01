@@ -269,6 +269,21 @@ def test_patch_null_title_returns_422(client):
     assert get_response.json()["title"] == "Original title"
 
 
+def test_patch_null_tags_returns_422(client):
+    create_response = client.post("/tasks", json={
+        "title": "Original title",
+        "tags": ["keep-me"],
+    })
+    task_id = create_response.json()["id"]
+
+    response = client.patch(f"/tasks/{task_id}", json={"tags": None})
+
+    assert response.status_code == 422
+
+    get_response = client.get(f"/tasks/{task_id}")
+    assert get_response.json()["tags"] == ["keep-me"]
+
+
 def test_list_tasks_filter_overdue_with_naive_due_date_does_not_crash(client):
     client.post("/tasks", json={
         "title": "Naive due date task",

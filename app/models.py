@@ -80,7 +80,7 @@ class TaskUpdate(BaseModel):
     @classmethod
     def validate_tags(cls, v: Optional[list[str]]) -> Optional[list[str]]:
         if v is None:
-            return v
+            raise ValueError("Tags cannot be null")
         if len(v) > 10:
             raise ValueError("A task can have at most 10 tags")
         cleaned = []
