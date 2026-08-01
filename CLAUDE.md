@@ -78,7 +78,8 @@ The create/edit modal has its own separate inline error state (`.modal__error`, 
 
 - Do not add authentication/authorization.
 - Do not add a database or persistence layer.
-- Do not add deployment steps or config (Dockerfiles, CI/CD, hosting).
+- Do not add deployment steps or config (Dockerfiles, hosting).
+- CI is limited to test-only workflows (e.g. `.github/workflows/ci.yml` running `pytest -v` on push/PR). Do not add deployment, publishing, or release steps to CI without asking first.
 - Do not make major UI changes (new pages, redesigns, new frameworks) without asking first.
 
 ## Notes
