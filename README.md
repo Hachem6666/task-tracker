@@ -195,5 +195,6 @@ See [`docs/midcourse/`](docs/midcourse/) for:
 - [`reflection.md`](docs/midcourse/reflection.md)
 - [`docs/decisions/ci-workflow-design.md`](docs/decisions/ci-workflow-design.md) — technical decision note on the Module 4 CI workflow design (context, alternatives considered, trade-offs, and open questions).
 - [`docs/decisions/code-review-log.md`](docs/decisions/code-review-log.md) — AI code review comments for the Module 4 diff, triaged into Useful/Noise/Wrong with evidence and actions taken.
+- [`docs/decisions/module4-reflection.md`](docs/decisions/module4-reflection.md) — reflection on AI tools used during Module 4 (GitHub Copilot, Claude Code, Cursor/Codex).
 
 See also [`CLAUDE.md`](CLAUDE.md) for the fuller technical reference (tech stack, architecture, business rules, and do-not rules) used to guide AI-assisted work on this repo.
