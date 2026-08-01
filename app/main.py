@@ -21,8 +21,8 @@ APP_ENV = os.getenv("APP_ENV", "development")
 
 app = FastAPI(
     title="Task Tracker API",
-    description="Module 1 skeleton for the AI-Assisted Coding Task Tracker project.",
-    version="0.1.0",
+    description="FastAPI backend for the Task Tracker: task CRUD, status transitions, due dates/overdue filtering, and tags. Includes a GitHub Actions CI workflow and a local-only Dockerfile (Module 4).",
+    version="0.4.0",
 )
 app.add_middleware(
     CORSMiddleware,

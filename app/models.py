@@ -127,7 +127,7 @@ class TaskUpdate(BaseModel):
 
     @field_validator("tags")
     @classmethod
-    def validate_tags(cls, v: Optional[list[str]]) -> Optional[list[str]]:
+    def validate_tags(cls, v: Optional[list[str]]) -> list[str]:
         """Validate and normalize tags for a partial update.
 
         Rejects an explicit null tags value (tags: null in the request

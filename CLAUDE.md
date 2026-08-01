@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - FastAPI 0.110.0 (`requirements.txt`) [VERIFY exact installed version matches this pin — not confirmed against the active environment]
 - Pydantic v2 (`pydantic>=2.9.2`; v2 API — `ConfigDict`, `field_validator` — used throughout `app/models.py`)
 - Uvicorn 0.29.0 (`requirements.txt`) [VERIFY exact installed version matches this pin — not confirmed against the active environment]
-- pytest — test suite lives in `tests/` and uses pytest, but pytest is **not** listed in `requirements.txt` [VERIFY exact pinned version — this environment has 8.4.2 installed, but it isn't declared as a project dependency]
+- pytest==8.4.2 (`requirements.txt`) — test suite lives in `tests/` and uses pytest
 - httpx<0.28 (`requirements.txt`) — used by Starlette's `TestClient` (exposed via `fastapi.testclient`) in tests
 - python-dotenv 1.0.1 (`requirements.txt`) — loads `.env` in `app/main.py` [VERIFY exact installed version matches this pin — not confirmed against the active environment]
 - Vanilla JavaScript frontend (`frontend/index.html`) — single file, no framework, no build step
