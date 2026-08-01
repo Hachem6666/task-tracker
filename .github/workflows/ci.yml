@@ -21,3 +21,42 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+  docker-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t task-tracker:ci .
+
+      - name: Start container
+        run: docker run -d --name tt-ci -p 8000:8000 task-tracker:ci
+
+      - name: Wait for /health to return 200
+        run: |
+          for i in $(seq 1 10); do
+            if curl -sf http://localhost:8000/health > /dev/null; then
+              echo "Health check passed"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Health check did not return 200 within timeout"
+          exit 1
+
+      - name: Verify container user is "app"
+        run: |
+          actual_user="$(docker exec tt-ci whoami)"
+          echo "Container user: $actual_user"
+          if [ "$actual_user" != "app" ]; then
+            echo "Expected user 'app' but got '$actual_user'"
+            exit 1
+          fi
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          if [ "$(docker ps -aq -f name=tt-ci)" ]; then
+            docker rm -f tt-ci
+          fi
