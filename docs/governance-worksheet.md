@@ -48,3 +48,17 @@ Repo visibility confirmed: `github.com/Hachem6666/task-tracker` is a **public** 
 | `CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]` (line 25) | Defines the default command: launches Uvicorn serving the FastAPI app object from `app/main.py`, bound to all interfaces on port 8000. | `--host 0.0.0.0` is required — Uvicorn's default bind (`127.0.0.1`) would make the app unreachable from outside the container. The exec-form JSON array runs Uvicorn as PID 1 directly (proper signal handling for `docker stop`). | If `--host 0.0.0.0` were changed to `127.0.0.1`, the container would start but be unreachable — a classic "works but I can't curl it" bug. No `--reload` flag here, unlike the local dev command in CLAUDE.md — I'm inferring this is intentional (reload is dev-only overhead) but haven't seen an explicit design note confirming it. | Partially |
 
 **My answers above are self-reported, not verified by Claude** — the "Do I own this yet?" column reflects your stated understanding, not an assessment I made.
+
+## 5.3C: Personal AI Usage Rules
+
+### Rule 1 – Never paste sensitive information into AI tools
+
+Before I paste anything into an AI tool, I will check that it does not contain passwords, API keys, customer data, or other confidential company information. If I'm unsure whether something is sensitive, I'll remove or replace it with sample data before using AI, even if I'm under time pressure.
+
+### Rule 2 – What I will always verify before accepting AI output
+
+Before I accept AI-generated code or explanations, I will test the result myself and make sure I understand how it works. If I can't explain a piece of code or I'm not confident it's correct, I'll check the official documentation or another reliable source before using it. I will also review any screenshots or outputs to make sure they don't contain confidential or identifying information before sharing them.
+
+### Rule 3 – How I will record AI contributions
+
+I will keep a simple record of any significant work generated with AI, including what AI helped create and what I changed or verified myself. For more complex or important parts that I don't fully understand, I will add a more detailed review, such as a line-by-line explanation or trace, and mark whether I fully understand it, partially understand it, or still need to review it. This way, I can clearly show which parts I have verified and which ones need more learning before I rely on them.
