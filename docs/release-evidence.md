@@ -11,7 +11,7 @@
 
 ## CI evidence
 - Workflow file: `.github/workflows/ci.yml`
-- Latest run link: https://github.com/Hachem6666/task-tracker/actions/runs/31175646981 (run #25, "Final Project Part A: README Final Project section + verified baseline," commit `2bc6a9b`, branch `final-project`) — both jobs (`test`, `docker-verify`) passed.
+- Latest run link: https://github.com/Hachem6666/task-tracker/actions/runs/31177727615 (run #28, "Final Project Part C: AI review, security mini-review, and ownership statement," commit `b3302a8`, branch `final-project`) — both jobs (`test`, `docker-verify`) passed. Earlier runs on this branch, including run #25 on commit `2bc6a9b`, also passed cleanly with the same CI configuration.
 - Test command used by CI: `pytest -v`
 - Shortcut check: no `continue-on-error`, no `|| true`, pytest is not skipped, Python version is pinned explicitly (3.11), dependency install step is present. No shortcuts found.
 - Note: 2 non-blocking annotations on this run — GitHub's own Node.js 20 deprecation warnings on `actions/checkout@v4` and `actions/setup-python@v5`. These are runner-level notices unrelated to the app and do not affect pass/fail status.
