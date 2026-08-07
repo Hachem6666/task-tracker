@@ -55,13 +55,16 @@ Separate input models govern requests:
 
 ## Context Strategy Comparison
 ### Strategy A
-- What it got right:
-- What it got wrong, invented, or missed:
+- What it got right: It produced a usable architecture document with the main sections and an overall structure that matched the project.
+- What it got wrong or missed: It relied on `CLAUDE.md` content (auto-injected by Claude Code) without disclosing this at first, making it look like everything was discovered directly from the repo files — I had to challenge it before it corrected the Files Inspected list. It also had more unconfirmed gaps than the other strategies, like not verifying exact dependency versions or reading `frontend/index.html` in full.
+
 ### Strategy B
-- What it got right:
-- What it got wrong, invented, or missed:
+- What it got right: It produced the most complete and well-organized architecture document. The descriptions matched the project well, and the structure would be the easiest to hand to someone else.
+- What it got wrong or missed: Although the document was strong, it relied heavily on the summaries in `CLAUDE.md` rather than verifying every detail directly from the repository. It acknowledged this itself, so my main concern is that some statements could have been accepted from the provided context instead of being independently confirmed.
+
 ### Strategy C
-- What it got right:
-- What it got wrong, invented, or missed:
+- What it got right: It was the most careful about distinguishing between verified information and unknowns. When details were not visible, it clearly stated that instead of making assumptions.
+- What it got wrong or missed: It still leaked a claim from `CLAUDE.md` about the `docs/midcourse` folder before correcting itself when challenged. That was a notable issue because the goal of the targeted approach was to rely only on the requested files, so this reduced confidence that all of its claims came from direct inspection.
+
 ### Verdict
-I picked Strategy ___ because ___
+I picked Strategy B because it produced the most complete, well-structured, and repository-aligned architecture document. Although it relied on summaries from `CLAUDE.md` for some structural information instead of verifying every detail directly, it was transparent about that limitation. I would still use it as the base document, while treating any context-derived claims as things to verify against the repository before considering the document final.
