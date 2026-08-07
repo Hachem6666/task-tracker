@@ -198,3 +198,44 @@ See [`docs/midcourse/`](docs/midcourse/) for:
 - [`docs/decisions/module4-reflection.md`](docs/decisions/module4-reflection.md) — reflection on AI tools used during Module 4 (GitHub Copilot, Claude Code, Cursor/Codex).
 
 See also [`CLAUDE.md`](CLAUDE.md) for the fuller technical reference (tech stack, architecture, business rules, and do-not rules) used to guide AI-assisted work on this repo.
+## Final Project
+
+Branch reviewed: final-project
+
+### What this submission demonstrates
+- Existing Task Tracker app still runs inside the intended course scope.
+- CI runs the pytest suite on push and/or pull request.
+- Docker image builds and runs with /health returning 200.
+- AI review, security, and ownership evidence is in docs/.
+
+### How to run locally
+```bash
+uvicorn app.main:app --reload --port 8000
+```
+(in a separate terminal, from the repository root)
+```bash
+python -m http.server 5500 --directory frontend
+```
+Then open `http://localhost:5500/index.html`.
+
+### How to run tests
+```bash
+pytest -v
+```
+
+### How to run with Docker
+```bash
+docker build -t task-tracker:dev .
+docker run -d --name task-tracker-dev -p 8000:8000 task-tracker:dev
+curl http://localhost:8000/health
+```
+
+### Evidence files
+- docs/release-evidence.md
+- docs/final-ai-review.md
+- docs/ai-playbook.md
+
+### AI assistance summary
+AI helped draft or review: CI workflow, Docker setup, security review, feature planning, context-engineering comparison, and documentation.
+I verified the work by: running the full pytest suite, checking `/health` directly, visually confirming the frontend board, and comparing AI claims against actual repo files and commits before accepting them.
+One AI suggestion I rejected or corrected: during Module 5.5's context-engineering exercise, Claude Code initially cited claims from `CLAUDE.md` without disclosing that the content was auto-injected rather than independently read — I challenged this twice (Strategy A and Strategy C) and required it to correct its Files Inspected list before I accepted the drafts.
