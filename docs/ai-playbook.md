@@ -32,9 +32,9 @@
 
 ## Decision Card
 
-- For a new feature I reach for: AI to help me understand requirements, brainstorm an approach, and identify edge cases — it gives me a starting point without handing over the decision.
-- For a code review I reach for: AI as a second reviewer, then I compare its findings with the actual code and decide validity myself.
-- For debugging I reach for: AI to identify possible causes and suggest tests, but I reproduce the problem and verify the fix myself.
-- For infrastructure I reach for: documentation and my own inspection first, then AI to explain configuration or troubleshoot specific problems — infrastructure changes have wider consequences, so I don't want AI making changes blindly.
-- I will never paste company passwords, API keys, customer personal information, or confidential company data into an AI tool.
-- My one rule is: use AI to help me think and work faster, but never let it replace my judgment or verification.
+- For a new feature I reach for: Claude Code, when the work involves understanding and changing multiple files in the repository — as in Module 5.4's repo-grounded feature planning. I don't have enough hands-on experience with Cursor or Codex App to claim a comparison I haven't tested.
+- For a code review I reach for: AI as a second reviewer, but only as a starting point. During Module 5.2's security audit, some AI findings were Valid and some were Noise or False Positive — the tool earned its usefulness through my independent verification, not automatically by tool shape.
+- For debugging I reach for: a tool with real repo/test access when I need to verify behavior, not just suggest it. The Module 4 tag-validation bug (`TaskUpdate.validate_tags` with `{"tags": null}`) needed Claude Code's access to the actual files and tests; a no-access tool could only have guessed at the edge case.
+- For infrastructure I reach for: documentation and my own inspection first, with AI kept under explicit approval gates — the Module 5.1 guardrails (docs-only edits, no app/ changes without approval) showed me that a tool's blast radius matters more than its raw capability. More access requires more control, not less caution.
+- I will never paste company passwords, API keys, customer personal information, or confidential company data into an AI tool. This is a precaution based on the risks I identified in my Module 5.3A governance exercise, not a rule born from an actual near-miss.
+- My one rule is: use AI to help me think and work faster, but never let it replace my judgment or verification. This held true both with Claude Code (checking file lists, catching the wrong filename, challenging the CLAUDE.md leaks) and with general chat (verifying AI-suggested SQL query structure and results in my Africell work) — though the level of verification scales with how much access the tool has.
