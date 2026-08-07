@@ -2,8 +2,8 @@
 
 ## 1. When I reach for AI first
 
-- When I need help understanding code or a technical problem. I use AI to explain what is happening and suggest where I should investigate.
-- When I need to find bugs or edge cases. I use AI to suggest possible problems and tests, then I verify them myself.
+- When I need help understanding code or a technical problem, I use AI to explain what is happening and suggest where I should investigate. During the Task Tracker debugging work, AI helped me understand the code and identify areas to check, but I still traced and tested the behavior myself.
+- When I need to find bugs or edge cases, I use AI to suggest possible problems and tests. During Module 4, AI helped surface edge cases around `TaskUpdate.validate_tags`, including `{"tags": null}`. I tested the behavior myself before accepting the finding.
 - When I need help with SQL, Excel, or data tasks. For example, I've used AI to help build and correct cross-server SQL queries — catching missing server prefixes that were causing silent failures. I still check the query and results before using them.
 
 ## 2. When I do not reach for AI
@@ -20,9 +20,9 @@
 
 ## 4. My review rules
 
-- I check AI claims against the real source. I compare AI's answer with the actual files, code, documentation, or git commits instead of accepting its summary as proof.
+- I check AI claims against the real source. During Module 5.5, I caught that Claude Code's Files Inspected list was not accurate and challenged the claims against the actual repository. I did not accept the summary until the files inspected were corrected and verified.
 - I question what AI does not mention. If something important is missing, I investigate it myself. This helped me catch the CLAUDE.md context leaks instead of assuming the AI's summary was complete.
-- I make sure I understand the code before accepting it. I trace important changes line-by-line and make sure I can explain what the code does. If I cannot explain it, I do not consider the work fully verified.
+- I make sure I understand important changes before accepting them. In Module 5.3B, I traced the Dockerfile line-by-line and used the "Do I own this yet?" check to make sure I could explain what each part was doing.
 
 ## 5. What I am still figuring out
 
